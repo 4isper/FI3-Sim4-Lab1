@@ -16,7 +16,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEAS
 
 set(Polynom_LIBRARY "${PROJECT_NAME}")
 set(Polynom_TESTS   "test_${PROJECT_NAME}")
-set(Polynom_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(Polynom_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 include_directories("${Polynom_INCLUDE}" gtest)
 
