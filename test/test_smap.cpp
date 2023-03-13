@@ -28,12 +28,17 @@ TEST(TSMap, can_create_smap_with_positive_size)
 
 TEST(TSMap, throws_when_create_smap_with_negative_length)
 {
+	bool f;
 	try
 	{
-		TSMap<char, int> smp(-3);
-		ADD_FAILURE();
+		TSMap<char, int> mp(-3);
+		f = false;
 	}
-	catch (char*) {}
+	catch (char*)
+	{
+		f = true;
+	}
+	EXPECT_EQ(true, f);
 }
 
 TEST(TSMap, can_add_elem_in_not_full_smap)

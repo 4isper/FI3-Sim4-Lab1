@@ -28,12 +28,17 @@ TEST(TMap, can_create_map_with_positive_size)
 
 TEST(TMap, throws_when_create_map_with_negative_length)
 {
+	bool f;
 	try
 	{
 		TMap<char, int> mp(-3);
-		ADD_FAILURE();
+		f = false;
 	}
-	catch (char*) {}
+	catch (char*)
+	{
+		f = true;
+	}
+	EXPECT_EQ(true, f);
 }
 
 TEST(TMap, can_add_elem_in_not_full_map)
