@@ -54,79 +54,37 @@ inline void TItem<Key, Data>::SetData(Data* d)
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator==(const TItem<Key, Data>& p)
 {
-  if (this->key == p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key == p.key;
 }
 
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator!=(const TItem<Key, Data>& p)
 {
-  if (this->key != p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key != p.key;
 }
 
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator>=(const TItem<Key, Data>& p)
 {
-  if (this->key >= p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key >= p.key;
 }
 
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator<=(const TItem<Key, Data>& p)
 {
-  if (this->key <= p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key <= p.key;
 }
 
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator>(const TItem<Key, Data>& p)
 {
-  if (this->key > p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key > p.key;
 }
 
 template<class Key, class Data>
 inline bool TItem<Key, Data>::operator<(const TItem<Key, Data>& p)
 {
-  if (this->key < p.key)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return this->key < p.key;
 }
 
 #endif 
