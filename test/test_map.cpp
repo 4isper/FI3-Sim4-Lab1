@@ -34,7 +34,7 @@ TEST(TMap, throws_when_create_map_with_negative_length)
 		TMap<char, int> mp(-3);
 		f = false;
 	}
-	catch (char*)
+	catch (...)
 	{
 		f = true;
 	}

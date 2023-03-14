@@ -34,7 +34,7 @@ TEST(TSMap, throws_when_create_smap_with_negative_length)
 		TSMap<char, int> mp(-3);
 		f = false;
 	}
-	catch (char*)
+	catch (...)
 	{
 		f = true;
 	}
