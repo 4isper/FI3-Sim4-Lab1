@@ -58,18 +58,6 @@ public:
 };
 
 template<class Key, class Data>
-class TAVLTreeItertor
-{
-protected:
-  TAVLTree<Key, Data>* tree;
-  TItem<Key, Data>* arr;
-  int i;
-public:
-  TAVLTreeItertor<Key, Data>(TAVLTree<Key, Data>* tree);
-  ~TAVLTreeItertor<Key, Data>();
-};
-
-template<class Key, class Data>
 inline TAVLTreeItem<Key, Data>* TAVLTree<Key, Data>::RotateRight(TAVLTreeItem<Key, Data>* item)
 {
   TAVLTreeItem<Key, Data>* tmp = item->GetLeft();
