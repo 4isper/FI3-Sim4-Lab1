@@ -1,9 +1,0 @@
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/src/CMakeFiles/Polynom.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/samples/CMakeFiles/sample_list.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/samples/CMakeFiles/sample_map.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/samples/CMakeFiles/sample_poly.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/samples/CMakeFiles/sample_smap.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/gtest/CMakeFiles/gtest.dir
-C:/Users/admin/source/repos/Cpp/FI3-Sim4-Lab1/build/test/CMakeFiles/test_Polynom.dir
