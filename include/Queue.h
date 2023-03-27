@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __Queue_H__
+#define __Queue_H__
+
 #include <iostream>
 
 template<typename T>
@@ -265,3 +267,5 @@ inline void TQueue<T>::Free()
   first = 0;
   last = 0;
 }
+
+#endif
