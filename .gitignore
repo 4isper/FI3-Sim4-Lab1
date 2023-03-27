@@ -30,4 +30,10 @@
 *.exe
 *.out
 *.app
-build/*
+
+# no build
+/build/*
+# no vscode
+/.vscode/*
+# no clang cache
+/.cache/*

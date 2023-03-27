@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SMap.h"
+#include "SMapIterator.h"
 
 int main()
 {
@@ -32,6 +33,11 @@ int main()
   smap2.Add(&c1, &x);
 
   std::cout << smap1 << "\n" << smap2 << "\n";
+
+  for (auto i = smap1.Begin(); i < smap1.End(); ++i)
+  {
+    std::cout << *i << "\n";
+  }
 
   return 0;
 }

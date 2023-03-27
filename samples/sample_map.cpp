@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Map.h"
+#include "MapIterator.h"
 
 int main()
 {
@@ -26,6 +27,11 @@ int main()
 	mp2.Add(&c1, &x1);
 
 	std::cout << mp1 << "\n" << mp2 << "\n";
+
+	for (auto i = mp1.Begin(); i < mp1.End(); ++i)
+	{
+		std::cout << *i << "\n";
+	}
 
 	return 0;
 }
