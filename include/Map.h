@@ -154,7 +154,7 @@ inline void TMap<Key, Data>::Delete(Key* k)
   int ind = FindInd(k);
   items[ind] = items[this->count - 1];
   items[this->count - 1] = nullptr;
-  count--;
+  this->count--;
 }
 
 template<class Key, class Data>

@@ -1,5 +1,3 @@
-/build
-
 # Prerequisites
 *.d
 
@@ -32,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+# no build
+/build/*
+# no vscode
+/.vscode/*
+# no clang cache
+/.cache/*
