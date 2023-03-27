@@ -6,24 +6,28 @@
 #include <iostream>
 
 template <class Key, class Data>
+class TSMapIterator;
+
+template <class Key, class Data>
 class TSMap : public IMap<Key, Data>
 {
 protected:
   TItem<Key, Data>* items;
-  int size;
-  int count;
+  friend class TSMapIterator<Key, Data>;
 public:
   TSMap(int sz = 100);
   TSMap(const TSMap<Key, Data>& m);
   ~TSMap();
+
   Data* operator[](Key* k);
   Data* Find(Key* k);
   const Data* operator[](Key* k) const;
   const Data* Find(Key* k) const;
   void Add(Key* k, Data* d);
   void Delete(Key* k);
-  bool IsEmpty();
-  bool IsFull();
+
+  TSMapIterator<Key, Data> Begin();
+  TSMapIterator<Key, Data> End();
 
   friend std::ostream& operator<<(std::ostream& ostr, const TSMap& m)
   {
@@ -76,28 +80,7 @@ inline TSMap<Key, Data>::~TSMap()
 template<class Key, class Data>
 inline Data* TSMap<Key, Data>::operator[](Key* k)
 {
-  int start = 0, end = count, mid = (start + end) / 2;
-
-  while (start != end)
-  {
-    if (*(items[mid].GetKey()) == *k)
-    {
-      return items[mid].GetData();
-    }
-    else
-    {
-      if (*(items[mid].GetKey()) < *k)
-      {
-        start = (end - start) % 2 ? mid + 1 : mid;
-      }
-      else
-      {
-        end = mid;
-      }
-      mid = (start + end) / 2;
-    }
-  }
-  throw "key not found";
+  return Find(k);
 }
 
 template<class Key, class Data>
@@ -130,28 +113,7 @@ inline Data* TSMap<Key, Data>::Find(Key* k)
 template<class Key, class Data>
 inline const Data* TSMap<Key, Data>::operator[](Key* k) const
 {
-  int start = 0, end = count, mid = (start + end) / 2;
-
-  while (start != end)
-  {
-    if (*(items[mid].GetKey()) == *k)
-    {
-      return items[mid].GetData();
-    }
-    else
-    {
-      if (*(items[mid].GetKey()) < *k)
-      {
-        start = (end - start) % 2 ? mid + 1 : mid;
-      }
-      else
-      {
-        end = mid;
-      }
-      mid = (start + end) / 2;
-    }
-  }
-  throw "key not found";
+  return Find(k);
 }
 
 template<class Key, class Data>
@@ -186,7 +148,7 @@ inline void TSMap<Key, Data>::Add(Key* k, Data* d)
 {
   int start = 0, end = count, mid = (start + end) / 2;
 
-  if (size == count)
+  if (this->IsFull())
   {
     throw "cannot be added to the full map";
   }
@@ -261,15 +223,15 @@ inline void TSMap<Key, Data>::Delete(Key* k)
 }
 
 template<class Key, class Data>
-inline bool TSMap<Key, Data>::IsEmpty()
+inline TSMapIterator<Key, Data> TSMap<Key, Data>::Begin()
 {
-  return count == 0;
+  return TSMapIterator<Key, Data>(*this);
 }
 
 template<class Key, class Data>
-inline bool TSMap<Key, Data>::IsFull()
+inline TSMapIterator<Key, Data> TSMap<Key, Data>::End()
 {
-  return count == size;
+  return TSMapIterator<Key, Data>(*this, this->GetCount());
 }
 
 #endif
