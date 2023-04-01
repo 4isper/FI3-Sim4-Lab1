@@ -1,14 +1,13 @@
 #include "IMap.h"
 #include "Item.h"
 
-#ifndef HASH_TABLE
-#define HASH_TABLE
-using namespace std;
+#ifndef __HashTable_H__
+#define __HashTable_H__
 template <class Key, class Data>
 class THashTable : public IMap<Key,Data>
 {
 public:
-	THashTable(int size_table);
+	THashTable(int size_table = 10);
 	THashTable(const THashTable<Key, Data>& m);
 	~THashTable();
 	int HashFunction(Key* k, int table_size);
@@ -35,7 +34,7 @@ inline THashTable<Key, Data>::THashTable(int size_table)
 		this->size = size_table;
 		this->count = 0;
 		items = new TItem<Key, Data>[this->size];
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < this->size; i++)
 			items[i].SetState(2);
 	}
 	else
@@ -105,7 +104,7 @@ inline void THashTable<Key, Data>::Add(Key* k, Data* d)
 		throw "Table is full!!";
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, size);
+	int index = HashFunction(k, this ->size);
 	do
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
@@ -131,7 +130,7 @@ inline void THashTable<Key, Data>::Add(Key* k, Data* d)
 		else
 		{
 			prev_index = index;
-			index = DoubleHashFunction(size, prev_index);
+			index = DoubleHashFunction(this->size, prev_index);
 		}
 	} while (true);
 }
@@ -175,8 +174,8 @@ inline int THashTable<Key, Data>::FindInd(Key* k)
 {
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, size);
-	for (int i = 0; i < size; i++) 
+	int index = HashFunction(k, this->size);
+	for (int i = 0; i < this->size; i++)
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
 		{
@@ -186,7 +185,7 @@ inline int THashTable<Key, Data>::FindInd(Key* k)
 		else
 		{
 			prev_index = index;
-			index = DoubleHashFunction(size, prev_index);
+			index = DoubleHashFunction(this->size, prev_index);
 		}
 	}
 	throw "Key is not found!!!";
@@ -197,8 +196,8 @@ inline int THashTable<Key, Data>::FindInd(Key* k) const
 {
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, size);
-	for (int i = 0; i < size; i++)
+	int index = HashFunction(k, this->size);
+	for (int i = 0; i < this->size; i++)
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
 		{
@@ -208,7 +207,7 @@ inline int THashTable<Key, Data>::FindInd(Key* k) const
 		else
 		{
 			prev_index = index;
-			index = DoubleHashFunction(size, prev_index);
+			index = DoubleHashFunction(this->size, prev_index);
 		}
 	}
 	throw "Key is not found!!!";
