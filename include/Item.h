@@ -8,9 +8,12 @@ class TItem {
 protected:
   Key* key;
   Data* data;
+  int state;
 public:
   TItem(Key* k = nullptr, Data* d = nullptr);
   Key* GetKey();
+  int GetState();
+  void SetState(int st);
   const Key* GetKey() const;
   void SetKey(Key* k);
   Data* GetData();
@@ -41,6 +44,18 @@ template<class Key, class Data>
 inline Key* TItem<Key, Data>::GetKey()
 {
   return key;
+}
+
+template<class Key, class Data>
+inline int TItem<Key, Data>::GetState()
+{
+    return state;
+}
+
+template<class Key, class Data>
+inline void TItem<Key, Data>::SetState(int st)
+{
+    state = st;
 }
 
 template<class Key, class Data>
