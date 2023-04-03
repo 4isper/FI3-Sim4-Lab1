@@ -10,8 +10,8 @@ public:
 	THashTable(int size_table = 10);
 	THashTable(const THashTable<Key, Data>& m);
 	~THashTable();
-	int HashFunction(Key* k, int table_size);
-	int HashFunction(Key* k, int table_size) const;
+	int HashFunction(Key* k);
+	int HashFunction(Key* k) const;
 	int DoubleHashFunction(int table_size,int prev_index);
 	int DoubleHashFunction(int table_size,int prev_index) const;
 	void Add(Key* k, Data* d);
@@ -66,21 +66,25 @@ inline THashTable<Key, Data>::~THashTable()
 }
 
 template<class Key, class Data>
-inline int THashTable<Key, Data>::HashFunction(Key* k, int table_size)
+inline int THashTable<Key, Data>::HashFunction(Key* k)
 {
-	int sum = 0;
-	for (char ch : *k)
-		sum += ch;
-	return sum % table_size;
+	/*if (std::is_same<Key, std::string>::value) {
+		std::string s = *k; 
+		return (int)s[0] % (size - 1);
+	}*/
+	if(std::is_same<Key, char>::value)
+		return (int)(*k) % (size - 1);
 }
 
 template<class Key, class Data>
-inline int THashTable<Key, Data>::HashFunction(Key* k, int table_size) const
+inline int THashTable<Key, Data>::HashFunction(Key* k) const
 {
-	int sum = 0;
-	for (char ch : *k)
-		sum += ch;
-	return sum % table_size;
+	/*if (std::is_same<Key, std::string>::value) {
+		std::string s = *k;
+		return (int)s[0] % (size - 1);
+	}*/
+	if (std::is_same<Key, char>::value)
+		return (int)(*k) % (size - 1);
 }
 
 template<class Key, class Data>
@@ -104,7 +108,7 @@ inline void THashTable<Key, Data>::Add(Key* k, Data* d)
 		throw "Table is full!!";
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, this ->size);
+	int index = HashFunction(k);
 	do
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
@@ -174,7 +178,7 @@ inline int THashTable<Key, Data>::FindInd(Key* k)
 {
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, this->size);
+	int index = HashFunction(k);
 	for (int i = 0; i < this->size; i++)
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
@@ -196,7 +200,7 @@ inline int THashTable<Key, Data>::FindInd(Key* k) const
 {
 	int num = -1;
 	int prev_index = 0;
-	int index = HashFunction(k, this->size);
+	int index = HashFunction(k);
 	for (int i = 0; i < this->size; i++)
 	{
 		if ((items[index].GetState() == 1) && (*(items[index].GetKey()) == *k))
