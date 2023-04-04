@@ -73,7 +73,7 @@ inline int THashTable<Key, Data>::HashFunction(Key* k)
 		return (int)s[0] % (size - 1);
 	}*/
 	if(std::is_same<Key, char>::value)
-		return (int)(*k) % (size - 1);
+		return (int)(*k) % (this -> size - 1);
 }
 
 template<class Key, class Data>
@@ -84,7 +84,7 @@ inline int THashTable<Key, Data>::HashFunction(Key* k) const
 		return (int)s[0] % (size - 1);
 	}*/
 	if (std::is_same<Key, char>::value)
-		return (int)(*k) % (size - 1);
+		return (int)(*k) % (this -> size - 1);
 }
 
 template<class Key, class Data>
