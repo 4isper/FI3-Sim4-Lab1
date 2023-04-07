@@ -63,11 +63,12 @@ inline THashTable<Key, Data>::THashTable(const THashTable<Key, Data>& m)
 {
 	this->count = m.count;
 	this->size = m.size;
-	items = new TItem<Key, Data>[this->size];
+	items = new TItem<Key, Data>[this->size + 1];
 	for (int i = 0; i < this->size; i++)
 	{
 		items[i] = m.items[i];
 	}
+	items[this ->size].SetState(4);
 }
 
 template<class Key, class Data>
