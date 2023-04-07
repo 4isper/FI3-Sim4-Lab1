@@ -50,7 +50,7 @@ inline THashTable<Key, Data>::THashTable(int size_table)
 		items = new TItem<Key, Data>[this->size + 1];
 		for (int i = 0; i < this->size; i++)
 			items[i].SetState(2);
-		items[size].SetState(4);
+		items[this ->size].SetState(4);
 	}
 	else
 	{
