@@ -40,7 +40,7 @@ TEST(TStack, check_empty_stack)
 {
   TStack<int> st(3);
 
-  EXPECT_EQ(1, st.isEmpty());
+  EXPECT_EQ(1, st.IsEmpty());
 }
 
 TEST(TStack, check_not_empty_stack)
@@ -48,7 +48,7 @@ TEST(TStack, check_not_empty_stack)
   TStack<int> st(3);
   st.Push(1);
 
-  EXPECT_EQ(0, st.isEmpty());
+  EXPECT_EQ(0, st.IsEmpty());
 }
 
 TEST(TStack, check_full_stack)
@@ -58,7 +58,7 @@ TEST(TStack, check_full_stack)
   st.Push(2);
   st.Push(3);
 
-  EXPECT_EQ(1, st.isFull());
+  EXPECT_EQ(1, st.IsFull());
 }
 
 TEST(TStack, check_not_full_stack)
@@ -66,7 +66,7 @@ TEST(TStack, check_not_full_stack)
   TStack<int> st(3);
   st.Push(1);
 
-  EXPECT_EQ(0, st.isFull());
+  EXPECT_EQ(0, st.IsFull());
 }
 
 TEST(TStack, can_set_elem_in_not_full_stack)

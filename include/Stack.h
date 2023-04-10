@@ -19,8 +19,8 @@ public:
   bool operator==(const TStack<T>& st) const;
   bool operator!=(const TStack<T>& st) const;
 
-  bool isEmpty();
-  bool isFull();
+  bool IsEmpty();
+  bool IsFull();
   void Push(T elem);
   T Pop();
   T Top();
@@ -172,35 +172,21 @@ inline bool TStack<T>::operator!=(const TStack<T>& st) const
 }
 
 template<typename T>
-inline bool TStack<T>::isEmpty()
+inline bool TStack<T>::IsEmpty()
 {
-  if (first == 0)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return first == 0;
 }
 
 template<typename T>
-inline bool TStack<T>::isFull()
+inline bool TStack<T>::IsFull()
 {
-  if (size == first)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return size == first;
 }
 
 template<typename T>
 inline void TStack<T>::Push(T elem)
 {
-  if (isFull())
+  if (IsFull())
   {
     throw "fail stack full";
   }
@@ -211,11 +197,10 @@ inline void TStack<T>::Push(T elem)
 template<typename T>
 inline T TStack<T>::Pop()
 {
-  if (isEmpty())
+  if (IsEmpty())
   {
     throw "fail stack empty";
   }
-  //return pMem[first - 1];
   first--;
   return pMem[first];
 }
@@ -223,7 +208,7 @@ inline T TStack<T>::Pop()
 template<typename T>
 inline T TStack<T>::Top()
 {
-  if (isEmpty())
+  if (IsEmpty())
   {
     throw "fail stack empty";
   }
