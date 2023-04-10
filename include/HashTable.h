@@ -33,6 +33,7 @@ public:
 	const Data* operator[](Key* k) const;
 	int FindInd(Key* k);
 	int FindInd(Key* k) const;
+	bool CheckCollision(Key* k);
 	THashTableIterator<Key, Data> Begin();
 	THashTableIterator<Key, Data> End();
 protected:
@@ -223,6 +224,16 @@ inline int THashTable<Key, Data>::FindInd(Key* k) const
 		}
 	}
 	throw "Key is not found!!!";
+}
+
+template<class Key, class Data>
+inline bool THashTable<Key, Data>::CheckCollision(Key* k)
+{
+	int index = HashFunction(k);
+	if (items[index].GetState() != 1)
+			return false;
+	else
+		return true;
 }
 
 template<class Key, class Data>
