@@ -392,7 +392,7 @@ inline TStack<TString> TFormula<T>::CheckFormula(bool FirstThrow)
 	}
 	HandleTempNumberOrVarOrFunction(sz, errs, tmp, sz, FirstThrow);
 
-	formula_checked = errs.isEmpty();
+	formula_checked = errs.IsEmpty();
 	return errs;
 }
 
@@ -466,7 +466,7 @@ inline void TFormula<T>::CreatePostfixForm(void)
 					prio = 5;
 				else
 					prio = PriorityWithUnaryMinus(_fm[i]);
-				while (!opst.isEmpty())
+				while (!opst.IsEmpty())
 				{
 					StackItem = opst.Pop();
 					handling_e = !(ReservedOperations(StackItem[0]) || StackItem[0] == '~' || ReservedNamesFuntions(StackItem));
@@ -498,15 +498,15 @@ inline void TFormula<T>::CreatePostfixForm(void)
 	}
 	if (handling_e)
 		postfix += tmp;
-	if (!opst.isEmpty() && postfix[postfix.GetLen() - 1] != ' ')
+	if (!opst.IsEmpty() && postfix[postfix.GetLen() - 1] != ' ')
 		postfix += ' ';
 
-	while (!opst.isEmpty())
+	while (!opst.IsEmpty())
 	{
 		tmp = opst.Pop();
 		handling_e = !(ReservedOperations(tmp[0]) || tmp[0] == '~' || ReservedNamesFuntions(tmp));
 		postfix += tmp;
-		if (!handling_e && !opst.isEmpty())
+		if (!handling_e && !opst.IsEmpty())
 			postfix += ' ';
 	}
 	postfix_calculated = true;
