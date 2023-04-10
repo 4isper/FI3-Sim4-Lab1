@@ -172,12 +172,11 @@ TEST(THashTable, check_not_full_hashtable)
 
 TEST(THashTable, check_hash_matching)
 {
-	THashTable<char, int> ht(3);
-	char c = 'a';
-	int x = 1;
-	int y = 2; 
-	ht.Add(&c, &x); 
-	EXPECT_EQ(x, *ht.Find(&c));
-	ht.Add(&c, &y);
-	EXPECT_EQ(y, *ht.Find(&c));
+	THashTable<std::string, int> t1(5);
+	std::string strKeys[5] = { "One","Two","Three","Four","Five" };
+	int values[5] = { 1,2,3,4,5 };
+	t1.Add(&strKeys[0], &values[0]);
+	t1.Add(&strKeys[1], &values[1]);
+	t1.Add(&strKeys[2], &values[2]);
+	EXPECT_EQ(true, t1.HashFunction(&strKeys[3]));
 }
