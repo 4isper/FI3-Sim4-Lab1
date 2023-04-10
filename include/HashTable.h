@@ -230,7 +230,7 @@ template<class Key, class Data>
 inline bool THashTable<Key, Data>::CheckCollision(Key* k)
 {
 	int index = HashFunction(k);
-	if ((items[index].GetState() == 2) || (items[index].GetState() == 3))
+	if (items[index].GetState() != 1)
 			return false;
 	else
 		return true;
