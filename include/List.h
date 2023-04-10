@@ -1,16 +1,16 @@
-// ННГУ, ИИТММ, Курс "Алгоритмы и структуры данных"
+// пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"
 //
 //
 //
-// Линейный список
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 // TODO: add list iterator
 
-#ifndef __TList_H__
-#define __TList_H__
+#ifndef __List_H__
+#define __List_H__
 
 #include <iostream>
-#include "TListItem.h"
+#include "ListItem.h"
 
 template <typename T>
 class TList

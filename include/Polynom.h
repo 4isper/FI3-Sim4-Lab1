@@ -10,7 +10,7 @@
 #include <iostream>
 #include <cmath>
 #include "Monom.h"
-#include "TList.h"
+#include "List.h"
 
 class TPolynom
 {

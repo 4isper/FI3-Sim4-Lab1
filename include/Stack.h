@@ -215,8 +215,9 @@ inline T TStack<T>::Pop()
   {
     throw "fail stack empty";
   }
-  return pMem[first - 1];
+  //return pMem[first - 1];
   first--;
+  return pMem[first];
 }
 
 template<typename T>
