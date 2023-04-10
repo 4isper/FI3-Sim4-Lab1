@@ -470,8 +470,8 @@ TString& TString::operator+=(const char* s)
 
 TString& TString::operator+=(const char& s)
 {
+  ExtendBuffer(len + 2);
   len++;
-  ExtendBuffer(len + 1);
   this->s[len - 1] = s;
   this->s[len] = '\0';
   return *this;
