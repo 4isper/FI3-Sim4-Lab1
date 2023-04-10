@@ -219,7 +219,7 @@ inline TFormula<T>::TFormula(const TFormula& f)
 template<typename T>
 inline TFormula<T>::TFormula(TFormula&& f) noexcept
 {
-	this->operator=(f);
+	operator=(f);
 }
 
 template<typename T>

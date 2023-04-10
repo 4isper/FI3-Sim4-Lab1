@@ -16,6 +16,4 @@ public:
 	TListItem<T>* prev = nullptr;
 };
 
-
-
 #endif

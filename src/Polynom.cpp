@@ -4,7 +4,7 @@ TPolynom::TPolynom(const TPolynom& p)
 {
 	//monoms = p.monoms;
 	//maxN = p.maxN;
-	this->operator=(p);
+	operator=(p);
 }
 
 TPolynom& TPolynom::operator=(const TPolynom& p)
@@ -115,13 +115,13 @@ void TPolynom::SetK(const double& K_, const size_t* A_, size_t N_)
 	}
 	if (!found)
 	{
-		this->operator+=(TMonom(K_, A_, N_));
+		operator+=(TMonom(K_, A_, N_));
 	}
 }
 
 void TPolynom::SetK(const TMonom& m)
 {
-	this->SetK(m.K, m.A, m.N);
+	SetK(m.K, m.A, m.N);
 }
 
 TMonom TPolynom::Get(size_t i) const
@@ -185,7 +185,7 @@ TPolynom& TPolynom::operator*=(const TPolynom& p)
 {
 	size_t sz = p.monoms.GetCount();
 	for (size_t i = 0; i < sz; i++)
-		this->operator+=((*this) * p.monoms.Get(i));
+		operator+=((*this) * p.monoms.Get(i));
 	return *this;
 }
 
@@ -244,7 +244,7 @@ TPolynom& TPolynom::operator+=(const TMonom& p)
 TPolynom& TPolynom::operator-=(const TMonom& p)
 {
 	TMonom tmp(-p);
-	return this->operator+=(tmp);
+	return operator+=(tmp);
 }
 
 TPolynom& TPolynom::operator*=(const TMonom& p)
@@ -289,7 +289,7 @@ bool TPolynom::operator==(const TPolynom& m) const noexcept
 
 bool TPolynom::operator!=(const TPolynom& m) const noexcept
 {
-	return !(this->operator==(m));
+	return !(operator==(m));
 }
 
 std::ostream& operator<<(std::ostream& ostr, const TPolynom& p)

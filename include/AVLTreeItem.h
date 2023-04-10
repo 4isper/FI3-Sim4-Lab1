@@ -35,7 +35,7 @@ inline TAVLTreeItem<Key, Data>::TAVLTreeItem(Key *k, Data *d, uint8_t height, TA
 {
   if (height == ~0)
   {
-    this->CalculateHeight();
+    CalculateHeight();
   }
   else
   {
@@ -62,19 +62,19 @@ inline uint8_t TAVLTreeItem<Key, Data>::GetHeight(void) const
 template <class Key, class Data>
 inline uint8_t TAVLTreeItem<Key, Data>::GetHeightRight(void) const
 {
-  return this->right != nullptr ? this->right->height : 0;
+  return right != nullptr ? right->height : 0;
 }
 
 template <class Key, class Data>
 inline uint8_t TAVLTreeItem<Key, Data>::GetHeightLeft(void) const
 {
-  return this->left != nullptr ? this->left->height : 0;
+  return left != nullptr ? left->height : 0;
 }
 
 template <class Key, class Data>
 inline void TAVLTreeItem<Key, Data>::SetHeight(uint8_t height)
 {
-  this->height = height;
+  height = height;
 }
 
 template <class Key, class Data>
@@ -116,36 +116,36 @@ inline void TAVLTreeItem<Key, Data>::SetRight(TAVLTreeItem<Key, Data> *right)
 template <class Key, class Data>
 inline bool TAVLTreeItem<Key, Data>::IsNull(void) const
 {
-  return this->key == nullptr;
-  //return this->height == 0;
+  return this->GetKey() == nullptr;
+  //return height == 0;
 }
 
 template <class Key, class Data>
 inline int TAVLTreeItem<Key, Data>::GetBalanceFactor(void) const
 {
-  return static_cast<int>(this->GetHeightRight()) - static_cast<int>(this->GetHeightLeft());
+  return static_cast<int>(GetHeightRight()) - static_cast<int>(GetHeightLeft());
 }
 
 template <class Key, class Data>
 inline void TAVLTreeItem<Key, Data>::CalculateHeight(void)
 {
-  uint8_t hl = this->GetHeightLeft();
-  uint8_t hr = this->GetHeightRight();
-  this->SetHeight((hl > hr ? hl : hr)+1);
+  uint8_t hl = GetHeightLeft();
+  uint8_t hr = GetHeightRight();
+  SetHeight((hl > hr ? hl : hr)+1);
 }
 
 template <class Key, class Data>
 inline void TAVLTreeItem<Key, Data>::FullDelete(void)
 {
-  if (this->left != nullptr)
+  if (left != nullptr)
   {
-    this->left->FullDelete();
-    delete this->left;
+    left->FullDelete();
+    delete left;
   }
-  if (this->right != nullptr)
+  if (right != nullptr)
   {
-    this->right->FullDelete();
-    delete this->right;
+    right->FullDelete();
+    delete right;
   }
 }
 

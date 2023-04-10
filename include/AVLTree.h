@@ -87,17 +87,17 @@ inline TAVLTreeItem<Key, Data>* TAVLTree<Key, Data>::Balance(TAVLTreeItem<Key, D
   {
     if (item->GetRight()->GetBalanceFactor() < 0)
     {
-      item->SetRight(this->RotateRight(item->GetRight()));
+      item->SetRight(RotateRight(item->GetRight()));
     }
-    return this->RotateLeft(item);
+    return RotateLeft(item);
   }
   if (item->GetBalanceFactor() == -2)
   {
     if (item->GetLeft()->GetBalanceFactor() > 0)
     {
-      item->SetLeft(this->RotateLeft(item->GetLeft()));
+      item->SetLeft(RotateLeft(item->GetLeft()));
     }
-    return this->RotateRight(item);
+    return RotateRight(item);
   }
   return item;
 }
@@ -112,17 +112,17 @@ inline TAVLTreeItem<Key, Data>* TAVLTree<Key, Data>::AddRecursion(TAVLTreeItem<K
   }
   if (*k < *(item->GetKey()))
   {
-    item->SetLeft(this->AddRecursion(item->GetLeft(), k, d));
+    item->SetLeft(AddRecursion(item->GetLeft(), k, d));
   }
   else if (*k > *(item->GetKey()))
   {
-    item->SetRight(this->AddRecursion(item->GetRight(), k, d));
+    item->SetRight(AddRecursion(item->GetRight(), k, d));
   }
   else
   {
     throw "cannot add duplicate keys";
   }
-  return this->Balance(item);
+  return Balance(item);
 }
 
 template<class Key, class Data>
@@ -139,7 +139,7 @@ inline TAVLTreeItem<Key, Data>* TAVLTree<Key, Data>::GetMinTree(TAVLTreeItem<Key
     return item->GetRight();
   }
   item->SetLeft(GetMinTree(item->GetLeft()));
-  return this->Balance(item);
+  return Balance(item);
 }
 
 template<class Key, class Data>
@@ -166,12 +166,12 @@ inline TAVLTreeItem<Key, Data>* TAVLTree<Key, Data>::DeleteRecursion(TAVLTreeIte
     {
       return l;
     }
-    TAVLTreeItem<Key, Data>* min = this->FindMostLeft(r);
+    TAVLTreeItem<Key, Data>* min = FindMostLeft(r);
     min->SetRight(GetMinTree(r));
     min->SetLeft(l);
-    return this->Balance(min);
+    return Balance(min);
   }
-  return this->Balance(item);
+  return Balance(item);
 }
 
 template<class Key, class Data>
@@ -183,11 +183,11 @@ inline Data* TAVLTree<Key, Data>::FindRecursion(TAVLTreeItem<Key, Data>* item, K
   }
   if (*k < *(item->GetKey()))
   {
-    return this->FindRecursion(item->GetLeft(), k);
+    return FindRecursion(item->GetLeft(), k);
   }
   else if (*k > *(item->GetKey()))
   {
-    return this->FindRecursion(item->GetRight(), k);
+    return FindRecursion(item->GetRight(), k);
   }
   else
   {
@@ -204,11 +204,11 @@ inline const Data* TAVLTree<Key, Data>::FindRecursion(TAVLTreeItem<Key, Data>* i
   }
   if (*k < *(item->GetKey()))
   {
-    return this->FindRecursion(item->GetLeft(), k);
+    return FindRecursion(item->GetLeft(), k);
   }
   else if (*k > *(item->GetKey()))
   {
-    return this->FindRecursion(item->GetRight(), k);
+    return FindRecursion(item->GetRight(), k);
   }
   else
   {
@@ -300,7 +300,7 @@ inline TAVLTree<Key, Data>::TAVLTree(int sz)
   {
     this->size = sz;
     this->count = 0;
-    this->root = nullptr;
+    root = nullptr;
   }
   else
   {
@@ -315,22 +315,22 @@ inline TAVLTree<Key, Data>::TAVLTree(const TAVLTree<Key, Data>& m)
   this->count = m.count;
   if (m.count > 0)
   {
-    this->root = new TAVLTreeItem<Key, Data>(*m.root);
+    root = new TAVLTreeItem<Key, Data>(*m.root);
     DeepCopyRecursion(m.root, this->root);
   }
   else
   {
-    this->root = nullptr;
+    root = nullptr;
   }
 }
 
 template<class Key, class Data>
 inline TAVLTree<Key, Data>::~TAVLTree()
 {
-  if (this->root != nullptr)
+  if (root != nullptr)
   {
-    this->root->FullDelete();
-    delete this->root;
+    root->FullDelete();
+    delete root;
   }
   this->count = 0;
   this->size = 0;
@@ -339,13 +339,13 @@ inline TAVLTree<Key, Data>::~TAVLTree()
 template<class Key, class Data>
 inline Data* TAVLTree<Key, Data>::operator[](Key* k)
 {
-  return this->Find(k);
+  return Find(k);
 }
 
 template<class Key, class Data>
 inline const Data* TAVLTree<Key, Data>::operator[](Key* k) const
 {
-  return this->Find(k);
+  return Find(k);
 }
 
 
@@ -356,7 +356,7 @@ inline Data* TAVLTree<Key, Data>::Find(Key* k)
   {
     throw "key not found";
   }
-  return this->FindRecursion(this->root, k);
+  return FindRecursion(root, k);
 }
 
 template<class Key, class Data>
@@ -366,7 +366,7 @@ inline const Data* TAVLTree<Key, Data>::Find(Key* k) const
   {
     throw "key not found";
   }
-  return this->FindRecursion(this->root, k);
+  return FindRecursion(root, k);
 }
 
 template<class Key, class Data>
@@ -378,11 +378,11 @@ inline void TAVLTree<Key, Data>::Add(Key* k, Data* d)
   }
   if (this->IsEmpty())
   {
-    this->root = new TAVLTreeItem<Key, Data>(k, d, 1);
+    root = new TAVLTreeItem<Key, Data>(k, d, 1);
   }
   else
   {
-    this->root = this->AddRecursion(this->root, k, d);
+    root = AddRecursion(root, k, d);
   }
   this->count++;
 }
@@ -394,7 +394,7 @@ inline void TAVLTree<Key, Data>::Delete(Key* k)
   {
     throw "key not found";
   }
-  this->root = this->DeleteRecursion(this->root, k);
+  root = DeleteRecursion(root, k);
   this->count--;
 }
 

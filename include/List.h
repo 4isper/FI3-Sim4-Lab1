@@ -109,7 +109,7 @@ inline TList<T>::TList(const TList<T>& l)
 {
 	count = 0;
 	Clear();
-	this->operator=(l);
+	operator=(l);
 	//if (l.count != 0)
 	//{
 	//	start = new TListItem<T>;
@@ -186,7 +186,7 @@ inline TList<T>& TList<T>::operator=(const TList<T>& l)
 		TListItem<T>* tmp = l.start;
 		for (size_t i = 0; i < l.count; i++)
 		{
-			this->PushEnd(tmp->data);
+			PushEnd(tmp->data);
 			tmp = tmp->next;
 		}
 	}
@@ -196,7 +196,7 @@ inline TList<T>& TList<T>::operator=(const TList<T>& l)
 template<typename T>
 inline TList<T>::~TList()
 {
-	this->Clear();
+	Clear();
 }
 
 template<typename T>
@@ -440,7 +440,7 @@ inline bool TList<T>::operator==(const TList& l) const noexcept
 template<typename T>
 inline bool TList<T>::operator!=(const TList& l) const noexcept
 {
-	return !(this->operator==(l));
+	return !(operator==(l));
 }
 
 #endif
