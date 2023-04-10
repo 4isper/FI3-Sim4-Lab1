@@ -14,7 +14,7 @@ TMonom::TMonom(double K_, const size_t* A_, size_t N_)
 		A = new size_t[N];
 		for (size_t i = 0; i < N; i++)
 		{
-			this->SetAM(A_[i], i);
+			SetAM(A_[i], i);
 			//A[i] = A_[i];
 			//if (A[i] != 0)
 			//{
@@ -35,12 +35,12 @@ TMonom::TMonom(const TMonom& m)
 {
 	A = nullptr;
 	N = 0;
-	this->operator=(m);
+	operator=(m);
 }
 
 TMonom::TMonom(TMonom&& m) noexcept
 {
-	this->operator=(m);
+	operator=(m);
 }
 
 TMonom& TMonom::operator=(const TMonom& m)
@@ -415,7 +415,7 @@ bool TMonom::operator==(const TMonom& m) const noexcept
 
 bool TMonom::operator!=(const TMonom& m) const noexcept
 {
-	return !(this->operator==(m));
+	return !(operator==(m));
 }
 
 bool TMonom::DegreesG(const TMonom& m) const noexcept
@@ -658,7 +658,7 @@ bool TMonom::DegreesE(const size_t* A_, size_t N_) const noexcept
 
 bool TMonom::DegreesNE(const size_t* A_, size_t N_) const noexcept
 {
-	return !(this->DegreesE(A_, N_));
+	return !(DegreesE(A_, N_));
 }
 
 std::ostream& operator<<(std::ostream& ostr, const TMonom& m)
