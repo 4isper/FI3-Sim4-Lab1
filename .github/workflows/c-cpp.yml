@@ -19,7 +19,20 @@ jobs:
       run: make
     - name: make test
       run: ./bin/test_Polynom
-    - name: make test sample list
+    - name: make sample list
       run: ./bin/sample_list
-    - name: make test sample poly
+    - name: make sample poly
       run: ./bin/sample_poly
+      
+    - name: make sample hashTable
+      run: ./bin/sample_HashTable
+    - name: make sample avltree
+      run: ./bin/sample_avltree
+    - name: make sample formula
+      run: ./bin/sample_formula
+    - name: make sample map
+      run: ./bin/sample_map
+    - name: make sample mystring
+      run: ./bin/sample_mystring
+    - name: make sample smap
+      run: ./bin/sample_smap
