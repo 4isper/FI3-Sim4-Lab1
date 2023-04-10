@@ -1,8 +1,8 @@
-// ННГУ, ИИТММ, Курс "Алгоритмы и структуры данных"
+// пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"
 //
 //
 //
-// Моном
+// пїЅпїЅпїЅпїЅпїЅ
 
 #ifndef __Monom_H__
 #define __Monom_H__
@@ -23,6 +23,7 @@ public:
 	TMonom(const TMonom& m);
 	TMonom(TMonom&& m) noexcept;
 	TMonom& operator=(const TMonom& m);
+	TMonom& operator=(const double& K_);
 	TMonom& operator=(TMonom&& m) noexcept;
 	~TMonom();
 

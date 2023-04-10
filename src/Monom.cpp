@@ -67,6 +67,15 @@ TMonom& TMonom::operator=(const TMonom& m)
 	return *this;
 }
 
+TMonom& TMonom::operator=(const double& K_)
+{
+  K = K_;
+  A = nullptr;
+  N = 0;
+  realN = 0;
+	return *this;
+}
+
 TMonom& TMonom::operator=(TMonom&& m) noexcept
 {
 	A = nullptr;

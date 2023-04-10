@@ -5,7 +5,7 @@
 // ������������ ������
 
 #include <iostream>
-#include "TList.h"
+#include "List.h"
 
 int main()
 {
