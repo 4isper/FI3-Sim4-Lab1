@@ -1,4 +1,5 @@
 #include "HashTable.h"
+#include "MyString.h"
 #include <gtest.h>
 
 
@@ -172,8 +173,8 @@ TEST(THashTable, check_not_full_hashtable)
 
 TEST(THashTable, check_hash_matching)
 {
-	THashTable<std::string, int> t1(5);
-	std::string strKeys[5] = { "One","Two","Three","Four","Five" };
+	THashTable<TString, int> t1(5);
+	TString strKeys[5] = { "One","Two","Three","Four","Five" };
 	int values[5] = { 1,2,3,4,5 };
 	t1.Add(&strKeys[0], &values[0]);
 	t1.Add(&strKeys[1], &values[1]);

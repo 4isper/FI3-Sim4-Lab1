@@ -4,8 +4,8 @@
 #include "IMap.h"
 #include "AVLTreeItem.h"
 #include "Item.h"
+#include "MyString.h"
 #include <iostream>
-#include <string>
 #include <functional>
 
 template<class Key, class Data>
@@ -23,7 +23,7 @@ protected:
   Data* FindRecursion(TAVLTreeItem<Key, Data>* item, Key* k);
   const Data* FindRecursion(TAVLTreeItem<Key, Data>* item, Key* k) const;
   void PrintItemRecursion(std::ostream& ostr, TAVLTreeItem<Key, Data>* item) const;
-  void DrawTreeRecursion(const std::string& prefix, TAVLTreeItem<Key, Data>* item, bool isLeft) const;
+  void DrawTreeRecursion(const TString& prefix, TAVLTreeItem<Key, Data>* item, bool isLeft) const;
   void DeepCopyRecursion(const TAVLTreeItem<Key, Data>* itemFrom, TAVLTreeItem<Key, Data>* itemTo);
   bool IsTreeBalancedRecursion(TAVLTreeItem<Key, Data>* item) const;
   void ForEachKeyRecursion(TAVLTreeItem<Key, Data>* item, std::function<void(Key*, Data*)> func);
@@ -228,7 +228,7 @@ inline void TAVLTree<Key, Data>::PrintItemRecursion(std::ostream& ostr, TAVLTree
 }
 
 template<class Key, class Data>
-inline void TAVLTree<Key, Data>::DrawTreeRecursion(const std::string& prefix, TAVLTreeItem<Key, Data>* item, bool isLeft) const
+inline void TAVLTree<Key, Data>::DrawTreeRecursion(const TString& prefix, TAVLTreeItem<Key, Data>* item, bool isLeft) const
 { 
   if (item != nullptr)
   {
