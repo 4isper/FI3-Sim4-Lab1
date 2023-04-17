@@ -5,11 +5,22 @@
 4 - row outside the table(for the insertion algorithm)
 */
 
-#include "IMap.h"
-#include "Item.h"
-
 #ifndef __HashTable_H__
 #define __HashTable_H__
+
+#include "IMap.h"
+#include "Item.h"
+#include "MyString.h"
+
+template <>
+struct std::hash<TString>
+{
+	size_t operator()( const TString& k ) const
+	{
+		std::hash<std::string> h;
+		return h(std::string(k.GetString()));
+    }
+};
 
 template <class Key, class Data>										
 class THashTableIterator;

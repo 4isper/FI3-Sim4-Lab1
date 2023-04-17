@@ -5,7 +5,7 @@
 int main() 
 {
 	
-	THashTable<std::string, int> t1(5);
+	THashTable<TString, int> t1(5);
 	THashTable<char, int> t2(5);
 	THashTable<int, int> t3(5);
 	THashTable<double, int> t4(5);
@@ -13,7 +13,7 @@ int main()
 
 	//string key table
 //==================================================================================
-	std::string strKeys[5] = { "One","Two","Three","Four","Five" };
+	TString strKeys[5] = { "One","Two","Three","Four","Five" };
 	for (int i = 0; i < 5; i++)
 		t1.Add(&strKeys[i], &values[i]);
 	for (auto j = t1.Begin(); j < t1.End(); ++j)
