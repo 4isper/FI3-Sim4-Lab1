@@ -58,7 +58,14 @@ TEST(TTree, can_add_elem_in_full_tree)
 	tr.Add(&c1, &x1);
 	tr.Add(&c2, &x2);
 
-	ASSERT_ANY_THROW(tr.Add(&c3, &x3));
+	try
+	{
+		tr.Add(&c3, &x3);
+	}
+	catch (...)
+	{
+		ADD_FAILURE();
+	}
 }
 
 TEST(TTree, can_add_elem_with_equal_key)
