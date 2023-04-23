@@ -14,7 +14,23 @@
 #include "MyString.h"
 #include <math.h>
 
+#include "IMap.h"
+#include "AVLTree.h"
+#include "HashTable.h"
+#include "Map.h"
+#include "SMap.h"
+
 const size_t FORMULA_MAX_LENGTH = 255;
+const size_t FORMULA_TABLES_ARRAY_SIZE = 4;
+
+class TFormulaSelectTable
+{
+public:
+	static const size_t Map = 0;
+	static const size_t SMap = 1;
+	static const size_t AVLTree = 2;
+	static const size_t HashTable = 3;
+};
 
 template <class T>
 class TFormula
@@ -22,20 +38,20 @@ class TFormula
 protected:
 	TString fm;
 	TString postfix;
-	TString* vars;
-	T* vals;
-	size_t def_vals_sz;
+	IMap<TString, T>* tables[FORMULA_TABLES_ARRAY_SIZE];
+	size_t selected_table = 0;
 	T result;
 	bool calculated;
 	bool postfix_calculated;
 	bool formula_checked;
+	void TablesInit(void);
 	size_t Priority(const char& c) const;
 	size_t PriorityWithUnaryMinus(const char& c) const;
 	bool ReservedNamesFuntions(const TString& str) const;
 	bool ReservedOperations(const char& c) const;
 	bool ReservedConstants(const TString& str, T& res) const;
 	void HandleTempNumberOrVarOrFunction(const size_t& sz, TStack<TString>& errs, TString& tmp, const size_t& i, const bool& FirstThrow) const;
-	bool GetDefinedValues(const TString& str, T& res) const;
+	bool GetDefinedValues(TString& str, T& res) const;
 public:
 	TFormula(const TString& form = "");
 	TFormula(const TFormula& f);
@@ -44,14 +60,25 @@ public:
 	TFormula& operator=(TFormula&& f) noexcept;
 	~TFormula();
 
+	void SelectTable(const size_t _selected_table);
 	void SetFormula(const TString& form);
 	TString GetFormula(void) const;
 	TStack<TString> CheckFormula(bool FirstThrow = false);
 	void CreatePostfixForm(void);
 	TString GetPostfixForm(void);
 	T Calculate(void);
-	void SetDefinedValues(const TString* _vars, const T* _vals, const size_t sz);
+	void SetDefinedValues(TString* _vars, T* _vals, const size_t sz);
+	void SetDefinedValue(TString* _var, T* _val);
 };
+
+template<typename T>
+inline void TFormula<T>::TablesInit()
+{
+	tables[TFormulaSelectTable::Map] = new TMap<TString, T>(FORMULA_MAX_LENGTH);
+	tables[TFormulaSelectTable::SMap] = new TSMap<TString, T>(FORMULA_MAX_LENGTH);
+	tables[TFormulaSelectTable::AVLTree] = new TAVLTree<TString, T>(FORMULA_MAX_LENGTH);
+	tables[TFormulaSelectTable::HashTable] = new THashTable<TString, T>(FORMULA_MAX_LENGTH);
+}
 
 template<typename T>
 inline size_t TFormula<T>::Priority(const char& c) const
@@ -92,12 +119,12 @@ inline bool TFormula<T>::ReservedConstants(const TString& str, T& res) const
 {
 	if (str == "pi")
 	{
-		res = M_PI;
+		res = T(M_PI);
 		return true;
 	}
 	if (str == "e")
 	{
-		res = M_E;
+		res = T(M_E);
 		return true;
 	}
 	return false;
@@ -166,54 +193,32 @@ inline void TFormula<T>::HandleTempNumberOrVarOrFunction(const size_t& sz, TStac
 }
 
 template<typename T>
-inline bool TFormula<T>::GetDefinedValues(const TString& str, T& res) const
+inline bool TFormula<T>::GetDefinedValues(TString& str, T& res) const
 {
-	for (size_t i = 0; i < def_vals_sz; i++)
-		if (vars[i] == str)
-		{
-			res = vals[i];
-			return true;
-		}
-	return false;
+	try
+	{
+		res = *(tables[selected_table]->Find(&str));
+		return true;
+	}
+	catch (const char*)
+	{
+		return false;
+	}
 }
 
 template<typename T>
 inline TFormula<T>::TFormula(const TString& form)
 {
+	TablesInit();
 	SetFormula(form);
 	//postfix = "";
 	//result = 0.0;
-	vars = nullptr;
-	vals = nullptr;
-	def_vals_sz = 0;
 }
 
 template<typename T>
 inline TFormula<T>::TFormula(const TFormula& f)
 {
-	fm = f.fm;
-	postfix = f.postfix;
-	result = f.result;
-	calculated = f.calculated;
-	postfix_calculated = f.postfix_calculated;
-	formula_checked = f.formula_checked;
-	if (f.vars != nullptr && f.vals != nullptr && f.def_vals_sz > 0)
-	{
-		def_vals_sz = f.def_vals_sz;
-		vars = new TString[def_vals_sz];
-		vals = new T[def_vals_sz];
-		for (size_t i = 0; i < def_vals_sz; i++)
-		{
-			vars[i] = f.vars[i];
-			vals[i] = f.vals[i];
-		}
-	}
-	else
-	{
-		vars = nullptr;
-		vals = nullptr;
-		def_vals_sz = 0;
-	}
+	operator=(f);
 }
 
 template<typename T>
@@ -225,7 +230,7 @@ inline TFormula<T>::TFormula(TFormula&& f) noexcept
 template<typename T>
 inline TFormula<T>& TFormula<T>::operator=(const TFormula& f)
 {
-	if (vars == f.vars || vals == f.vals)
+	if (tables == f.tables)
 		return *this;
 	fm = f.fm;
 	postfix = f.postfix;
@@ -233,37 +238,21 @@ inline TFormula<T>& TFormula<T>::operator=(const TFormula& f)
 	calculated = f.calculated;
 	postfix_calculated = f.postfix_calculated;
 	formula_checked = f.formula_checked;
-	if (f.vars != nullptr && f.vals != nullptr && f.def_vals_sz > 0)
-	{
-		def_vals_sz = f.def_vals_sz;
-		vars = new TString[def_vals_sz];
-		vals = new T[def_vals_sz];
-		for (size_t i = 0; i < def_vals_sz; i++)
-		{
-			vars[i] = f.vars[i];
-			vals[i] = f.vals[i];
-		}
-	}
-	else
-	{
-		vars = nullptr;
-		vals = nullptr;
-		def_vals_sz = 0;
-	}
+	selected_table = f.selected_table;
+	tables[TFormulaSelectTable::Map] = new TMap<TString, T>(*(static_cast<TMap<TString, T>*>(f.tables[TFormulaSelectTable::Map])));
+	tables[TFormulaSelectTable::SMap] = new TSMap<TString, T>(*(static_cast<TSMap<TString, T>*>(f.tables[TFormulaSelectTable::SMap])));
+	tables[TFormulaSelectTable::AVLTree] = new TAVLTree<TString, T>(*(static_cast<TAVLTree<TString, T>*>(f.tables[TFormulaSelectTable::AVLTree])));
+	tables[TFormulaSelectTable::HashTable] = new THashTable<TString, T>(*(static_cast<THashTable<TString, T>*>(f.tables[TFormulaSelectTable::HashTable])));
 	return *this;
 }
 
 template<typename T>
 inline TFormula<T>& TFormula<T>::operator=(TFormula&& f) noexcept
 {
-	vars = nullptr;
-	vals = nullptr;
-	def_vals_sz = 0;
 	std::swap(fm, f.fm);
 	std::swap(postfix, f.postfix);
-	std::swap(vars, f.vars);
-	std::swap(vals, f.vals);
-	std::swap(def_vals_sz, f.def_vals_sz);
+	std::swap(tables, f.tables);
+	std::swap(selected_table, f.selected_table);
 	std::swap(result, f.result);
 	std::swap(calculated, f.calculated);
 	std::swap(postfix_calculated, f.postfix_calculated);
@@ -274,12 +263,26 @@ inline TFormula<T>& TFormula<T>::operator=(TFormula&& f) noexcept
 template<typename T>
 inline TFormula<T>::~TFormula()
 {
-	delete[] vars;
-	delete[] vals;
-	def_vals_sz = 0;
+	for (size_t i = 0; i < FORMULA_TABLES_ARRAY_SIZE; i++)
+	{
+		delete tables[i];
+	}
 	calculated = false;
 	postfix_calculated = false;
 	formula_checked = false;
+}
+
+template<typename T>
+inline void TFormula<T>::SelectTable(const size_t _selected_table)
+{
+	if (_selected_table < FORMULA_TABLES_ARRAY_SIZE)
+	{
+		selected_table = _selected_table;
+	}
+	else
+	{
+		throw "Incorrect selected_table value: bigger than FORMULA_TABLES_ARRAY_SIZE";
+	}
 }
 
 template<typename T>
@@ -620,33 +623,53 @@ inline T TFormula<T>::Calculate(void)
 		}
 	}
 	result = opst.Top();
-	calculated = true;
+	//calculated = true; // Sadly because tables DO NOT store values but their adresses so you can't really know if someone changed values or not. That's why it's always false;
 	return result;
 }
 
 template<typename T>
-inline void TFormula<T>::SetDefinedValues(const TString* _vars, const T* _vals, const size_t sz)
+inline void TFormula<T>::SetDefinedValues(TString* _vars, T* _vals, const size_t sz)
 {
 	if (sz <= 0)
 	{
 		throw "Size cannot be zero";
 	}
-	if (sz != def_vals_sz)
-	{
-		if (vars != nullptr || vals != nullptr)
-		{
-			delete[] vars;
-			delete[] vals;
-		}
-		vars = new TString[sz];
-		vals = new T[sz];
-	}
-	def_vals_sz = sz;
 	for (size_t i = 0; i < sz; i++)
 	{
-		vars[i] = _vars[i];
-		vals[i] = _vals[i];
+		SetDefinedValue(&(_vars[i]), &(_vals[i]));
 	}
+	calculated = false;
+}
+
+template<typename T>
+inline void TFormula<T>::SetDefinedValue(TString* _var, T* _val)
+{
+/* 	bool isAdd = true;
+	try
+	{
+		(tables[0])->Add(_var, _val);
+	}
+	catch (const char*)
+	{
+		(tables[0])->Find(_var) = _val;
+		isAdd = false;
+	}
+	for (size_t i = 1; i < FORMULA_TABLES_ARRAY_SIZE; i++)
+	{
+		if (isAdd)
+		{
+			(tables[i])->Add(_var, _val);
+		}
+		else
+		{
+			(tables[i])->Find(_var) = _val;
+		}
+	} */
+	for (size_t i = 0; i < FORMULA_TABLES_ARRAY_SIZE; i++)
+	{
+		tables[i]->Add(_var, _val);
+	}
+	calculated = false;
 }
 
 #endif

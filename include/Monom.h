@@ -61,6 +61,8 @@ public:
 	bool DegreesE(const size_t* A_, size_t N_) const noexcept;
 	bool DegreesNE(const size_t* A_, size_t N_) const noexcept;
 
+	operator double() const;
+
 	//friend std::istream& operator>>(std::istream& istr, TMonom& m);
 	friend std::ostream& operator<<(std::ostream& ostr, const TMonom& m);
 };
