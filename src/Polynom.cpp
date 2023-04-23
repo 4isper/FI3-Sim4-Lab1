@@ -1,4 +1,5 @@
 #include "Polynom.h"
+#include "Monom.h"
 
 TPolynom::TPolynom(const TPolynom& p)
 {
@@ -7,10 +8,32 @@ TPolynom::TPolynom(const TPolynom& p)
 	operator=(p);
 }
 
+TPolynom::TPolynom(const TMonom& m)
+{
+	operator=(m);
+}
+
+TPolynom::TPolynom(const double& d)
+{
+	operator=(d);
+}
+
 TPolynom& TPolynom::operator=(const TPolynom& p)
 {
 	maxN = p.maxN;
 	monoms = p.monoms;
+	return *this;
+}
+
+TPolynom& TPolynom::operator=(const TMonom& m)
+{
+	operator+=(m);
+	return *this;
+}
+
+TPolynom& TPolynom::operator=(const double& d)
+{
+	operator+=(TMonom(d));
 	return *this;
 }
 
@@ -184,8 +207,10 @@ TPolynom& TPolynom::operator-=(const TPolynom& p)
 TPolynom& TPolynom::operator*=(const TPolynom& p)
 {
 	size_t sz = p.monoms.GetCount();
+	TPolynom tmp;
 	for (size_t i = 0; i < sz; i++)
-		operator+=((*this) * p.monoms.Get(i));
+		tmp += ((*this) * p.monoms.Get(i));
+	operator=(tmp);
 	return *this;
 }
 
@@ -260,6 +285,8 @@ TPolynom& TPolynom::operator*=(const TMonom& p)
 			m.A[j] += p.A[j];
 		if (m.realN < p.realN)
 			m.realN = p.realN;
+		if (maxN < m.realN)
+			maxN = m.realN;
 	}
 	return *this;
 }
@@ -290,6 +317,17 @@ bool TPolynom::operator==(const TPolynom& m) const noexcept
 bool TPolynom::operator!=(const TPolynom& m) const noexcept
 {
 	return !(operator==(m));
+}
+
+TPolynom::operator double() const
+{
+	double res = 0;
+	size_t sz = monoms.GetCount();
+	for (size_t i = 0; i < sz; i++)
+	{
+		res += monoms.Get(i).GetK();
+	}
+	return res;
 }
 
 std::ostream& operator<<(std::ostream& ostr, const TPolynom& p)

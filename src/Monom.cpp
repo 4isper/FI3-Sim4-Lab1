@@ -661,6 +661,11 @@ bool TMonom::DegreesNE(const size_t* A_, size_t N_) const noexcept
 	return !(DegreesE(A_, N_));
 }
 
+TMonom::operator double() const
+{
+	return K;
+}
+
 std::ostream& operator<<(std::ostream& ostr, const TMonom& m)
 {
 	ostr << m.K;

@@ -113,3 +113,35 @@ TEST(TFormula, cannot_divide_by_zero)
 	ASSERT_NO_THROW(f.CreatePostfixForm());
 	ASSERT_ANY_THROW(f.Calculate());
 }
+
+TEST(TFormula, can_copy_formula)
+{
+	TFormula<double> f;
+	f.SetFormula("a1+b_*cc");
+	TString vars[] = { "a1", "b_", "cc" };
+	double vals[] = { 1.0, 2.2, 2.4 };
+	f.SetDefinedValues(vars, vals, 3);
+	EXPECT_EQ(1.0 + 2.2 * 2.4, f.Calculate());
+	TFormula<double> f2(f);
+	TFormula<double> f3 = f;
+
+	EXPECT_EQ(f.GetFormula(), f2.GetFormula());
+	EXPECT_EQ(f.GetFormula(), f3.GetFormula());
+
+	EXPECT_EQ(f.GetPostfixForm(), f2.GetPostfixForm());
+	EXPECT_EQ(f.GetPostfixForm(), f3.GetPostfixForm());
+
+	EXPECT_EQ(1.0 + 2.2 * 2.4, f2.Calculate());
+	EXPECT_EQ(1.0 + 2.2 * 2.4, f3.Calculate());
+}
+
+TEST(TFormula, cant_copy_self)
+{
+	TFormula<double> f;
+	f.SetFormula("a1+b_*cc");
+	TString vars[] = { "a1", "b_", "cc" };
+	double vals[] = { 1.0, 2.2, 2.4 };
+	f.SetDefinedValues(vars, vals, 3);
+
+	EXPECT_NO_THROW(f = f);
+}

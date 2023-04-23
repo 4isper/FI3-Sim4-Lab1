@@ -20,7 +20,11 @@ protected:
 public:
 	TPolynom() {}
 	TPolynom(const TPolynom& p);
+	TPolynom(const TMonom& m);
+	TPolynom(const double& d);
 	TPolynom& operator=(const TPolynom& p);
+	TPolynom& operator=(const TMonom& m);
+	TPolynom& operator=(const double& d);
 
 	size_t GetMaxN(void) const noexcept;
 
@@ -52,6 +56,8 @@ public:
 
 	bool operator==(const TPolynom& m) const noexcept;
 	bool operator!=(const TPolynom& m) const noexcept;
+
+	operator double() const;
 
 	//friend std::istream& operator>>(std::istream& istr, TPolynom& p);
 	friend std::ostream& operator<<(std::ostream& ostr, const TPolynom& p);
