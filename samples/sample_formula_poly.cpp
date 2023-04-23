@@ -41,5 +41,11 @@ int main(int argc, char* argv[])
     std::cout << str[1] << ':' << ' ' << b << std::endl;
     std::cout << str[2] << ':' << ' ' << c << std::endl;
     std::cout << test.GetFormula() << ':' << ' ' << test.Calculate() << std::endl;
+    std::cout << "Let's use AVL Tree" << std::endl;
+    test.SelectTable(TFormulaSelectTable::AVLTree);
+    std::cout << test.GetFormula() << ':' << ' ' << test.Calculate() << std::endl;
+    std::cout << "Let's use Hash table" << std::endl;
+    test.SelectTable(TFormulaSelectTable::HashTable);
+    std::cout << test.GetFormula() << ':' << ' ' << test.Calculate() << std::endl;
     return 0;
 }

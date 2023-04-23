@@ -145,3 +145,27 @@ TEST(TFormula, cant_copy_self)
 
 	EXPECT_NO_THROW(f = f);
 }
+
+TEST(TFormula, can_select_table)
+{
+	TFormula<double> f;
+	f.SetFormula("a1+b_*cc");
+	TString vars[] = { "a1", "b_", "cc" };
+	double vals[] = { 1.0, 2.2, 2.4 };
+	f.SetDefinedValues(vars, vals, 3);
+	for (size_t i = 0; i < FORMULA_TABLES_ARRAY_SIZE; i++)
+	{
+		f.SelectTable(i);
+		EXPECT_EQ(1.0 + 2.2 * 2.4, f.Calculate());
+	}
+}
+
+TEST(TFormula, cant_select_table_out_of_range)
+{
+	TFormula<double> f;
+	f.SetFormula("a1+b_*cc");
+	TString vars[] = { "a1", "b_", "cc" };
+	double vals[] = { 1.0, 2.2, 2.4 };
+	f.SetDefinedValues(vars, vals, 3);
+	EXPECT_ANY_THROW(f.SelectTable(FORMULA_TABLES_ARRAY_SIZE+1));
+}
