@@ -36,3 +36,6 @@ jobs:
       run: ./bin/sample_mystring
     - name: make sample smap
       run: ./bin/sample_smap
+
+    - name: make sample formula poly
+      run: ./bin/sample_formula_poly
