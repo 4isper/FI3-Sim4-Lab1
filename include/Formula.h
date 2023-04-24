@@ -38,7 +38,7 @@ class TFormula
 protected:
 	TString fm;
 	TString postfix;
-	IMap<TString, T>* tables[FORMULA_TABLES_ARRAY_SIZE];
+	IMap<TString, T>* tables[FORMULA_TABLES_ARRAY_SIZE] = { 0 };
 	size_t selected_table = 0;
 	T result;
 	bool calculated;
@@ -265,7 +265,8 @@ inline TFormula<T>::~TFormula()
 {
 	for (size_t i = 0; i < FORMULA_TABLES_ARRAY_SIZE; i++)
 	{
-		delete tables[i];
+		if (tables[i])
+			delete tables[i];
 	}
 	calculated = false;
 	postfix_calculated = false;
